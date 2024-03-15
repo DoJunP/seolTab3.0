@@ -91,15 +91,15 @@ export let clickElementForTarget = async (
       logToFile(`${clickElementName} 노출되지 않아 케이스 테스트 불가`, BLOCK);
     } else if (error.message.includes('still')) {
       console.log(
-        `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생`,
+        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입/발생`,
         FAIL,
       );
       logToFile(
-        `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생`,
+        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입/발생`,
         FAIL,
       );
       await driver.saveScreenshot(
-        `./bugImage/${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생 ${FAIL}(${formattedDate}).png`,
+        `./bugImage/${clickElementName} 클릭 시 ${targetElementName} 화면 or 모달 진입 or 발생 ${FAIL}(${formattedDate}).png`,
       );
     } else {
       console.log(

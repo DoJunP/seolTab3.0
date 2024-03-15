@@ -17,6 +17,14 @@
       "name": "ios",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/ios/mainIos.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "ios_default",
+      "skipFiles": ["<node_internals>/**"],
+      "args": ["-id", "louis@seoltab.test", "-pw", "asdfasdf"],
+      "program": "${workspaceFolder}/ios/mainIos.js"
     }
   ]
 }

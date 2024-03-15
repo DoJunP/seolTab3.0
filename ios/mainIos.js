@@ -1,6 +1,8 @@
 import { remote } from 'webdriverio';
 import { BLANK, logToFile } from '../automationResult.js';
 import { logIn } from './loginIos.js';
+import { allowPermission } from './permission.js';
+import { logoutAtmain } from './logoutAtmain.js';
 
 async function main() {
   const caps = {
@@ -25,8 +27,36 @@ async function main() {
   });
 
   logToFile('--------------------{Start}--------------------', BLANK);
-  await logIn(driver);
-  //   await driver.deleteSession();
+  // 로그인 화면인지 판단 후 로그인 화면이면 로그인 화면 케이스 검증 시작, 로그인 화면이 아닌 경우 해당 케이스 제외
+  try {
+    await driver
+      .$('~TouchableOpacity_Submit')
+      .waitForDisplayed({ timeout: 10000, interval: 2000 });
+    await logIn(driver);
+  } catch (error) {
+    console.log(error);
+    if (error.message.includes('("~TouchableOpacity_Submit") still not')) {
+      console.log('로그인 화면에 있지 않습니다');
+      await logoutAtmain(driver);
+      await logIn(driver);
+    } else {
+      throw error;
+    }
+  }
+  // "앱 접근" 권한 안내 화면 진입 여부 판단 후 자동화 케이스 시작
+  try {
+    await driver.$('~앱 접근 권한 안내').waitForDisplayed();
+    await allowPermission(driver);
+  } catch (error) {
+    console.log(error);
+    if (error.message.includes('("~앱 접근 권한 안내") still not')) {
+      console.log('모든 권한 허용 상태');
+    } else {
+      throw error;
+    }
+  }
+
+  await driver.deleteSession();
   logToFile('--------------------{END}--------------------', BLANK);
 }
 
