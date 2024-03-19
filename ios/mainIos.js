@@ -3,6 +3,7 @@ import { BLANK, logToFile } from '../automationResult.js';
 import { logIn } from './loginIos.js';
 import { allowPermission } from './permission.js';
 import { logoutAtmain } from './logoutAtmain.js';
+import { myPage } from './myPage.js';
 
 async function main() {
   const caps = {
@@ -55,7 +56,7 @@ async function main() {
       throw error;
     }
   }
-
+  await myPage(driver);
   await driver.deleteSession();
   logToFile('--------------------{END}--------------------', BLANK);
 }
