@@ -2,7 +2,12 @@
 // 마이페이지 진입까지는 같음, 화면 내부에서 요소를 파악해야함
 
 import { BLOCK, FAIL, logToFile, PASS } from '../automationResult.js';
-import { clickElement, downtopScroll, findElement } from '../common.js';
+import {
+  clickElement,
+  clickElementForTarget,
+  downtopScroll,
+  findElement,
+} from '../common.js';
 
 export let myPage = async (driver) => {
   // "메인" 화면 상단 네비게이션에서 [프로필] 버튼 클릭 시 "마이페이지" 화면 진입
@@ -147,9 +152,79 @@ let studentMypage = async (driver) => {
   } finally {
     driver.pause(500);
   }
-  await driver
-    .$('//XCUIElementTypeStaticText[@name="개인정보 처리방침"]')
-    .click();
+  await clickElementForTarget(
+    driver,
+    '[내 수강권 확인하기] 버튼',
+    '(//XCUIElementTypeLink[@name="내 수강권 확인하기"])[1]',
+    '"마이페이지_수강 정보"',
+    '~이용중인 상품',
+  );
+  await clickElement(
+    driver,
+    '"기본정보" 탭',
+    '//XCUIElementTypeStaticText[@name="기본 정보"]',
+  );
+  await clickElementForTarget(
+    driver,
+    '[비밀번호 변경] 버튼',
+    '~비밀번호 변경',
+    '"비밀번호 변경"',
+    '~현재 비밀번호',
+  );
+  await clickElement(
+    driver,
+    '[<]',
+    '//XCUIElementTypeOther[@name="설탭 로그인"]/XCUIElementTypeButton',
+  );
+  await clickElementForTarget(
+    driver,
+    '[공지사항] 버튼',
+    '(//XCUIElementTypeLink[@name="공지사항"])[1]',
+    '"공지사항"',
+    '//XCUIElementTypeStaticText[@name="공지사항"]',
+  );
+  await driver.touchAction({
+    action: 'tap',
+    x: 42,
+    y: 10,
+  });
+  await clickElementForTarget(
+    driver,
+    '[고객센터] 버튼',
+    '(//XCUIElementTypeLink[@name="고객센터"])[1]',
+    '"고객센터" 화면',
+    '(//XCUIElementTypeOther[@name="설탭 매니저"])[1]',
+  );
+  await driver.touchAction({
+    action: 'tap',
+    x: 42,
+    y: 10,
+  });
+  await clickElementForTarget(
+    driver,
+    '[서비스 이용약관] 버튼',
+    '~서비스 이용약관',
+    '"서비스 이용약관"',
+    '~[필수] 서비스 이용약관, 탭',
+  );
+  await driver.touchAction({
+    action: 'tap',
+    x: 42,
+    y: 10,
+  });
+
+  await clickElementForTarget(
+    driver,
+    '[개인정보 처리방침] 버튼',
+    '(//XCUIElementTypeLink[@name="개인정보 처리방침"])[1]',
+    '"개인정보 처리방침"',
+    '~[필수] 개인정보 처리방침, 탭',
+  );
+  await driver.touchAction({
+    action: 'tap',
+    x: 42,
+    y: 10,
+  });
 };
 
 let teacherMypage = async (driver) => {
