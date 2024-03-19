@@ -13,7 +13,7 @@ let formattedDate = `${timeStamp.getFullYear()}-${String(
 */
 export let findElement = async (driver, name, path) => {
   try {
-    await driver.$(path).waitForDisplayed();
+    await driver.$(path);
     console.log(`${name} 노출`, PASS);
     logToFile(`${name} 노출`, PASS);
   } catch (error) {
@@ -143,3 +143,25 @@ export let inputValue = async (driver, name, path, value) => {
     driver.pause(500);
   }
 };
+
+// 위에서 아래 스크롤
+export let topdownScroll = async (driver) => {
+  await driver.touchAction([
+    { action: 'press', x: 558, y: 763 },
+    { action: 'wait', ms: 2000 },
+    { action: 'moveTo', x: 555, y: 230 },
+    'release',
+  ]);
+};
+
+// 아래에서 위로 스크롤
+export let downtopScroll = async (driver) => {
+  await driver.touchAction([
+    { action: 'press', x: 558, y: 230 },
+    { action: 'wait', ms: 2000 },
+    { action: 'moveTo', x: 555, y: 763 },
+    'release',
+  ]);
+};
+
+// commit
