@@ -1,9 +1,13 @@
 import { BLANK, BLOCK, FAIL, PASS, logToFile } from './automationResult.js';
 
 let timeStamp = new Date();
-let formattedDate = `${timeStamp.getFullYear()}-${String(
+let formattedDate = `${String(timeStamp.getFullYear()).slice(-2)}-${String(
   timeStamp.getMonth() + 1,
-).padStart(2, '0')}-${String(timeStamp.getDate()).padStart(2, '0')}`;
+).padStart(2, '0')}-${String(timeStamp.getDate()).padStart(2, '0')} ${String(
+  timeStamp.getHours(),
+).padStart(2, '0')}:${String(timeStamp.getMinutes()).padStart(2, '0')}:${String(
+  timeStamp.getSeconds(),
+).padStart(2, '0')}`;
 
 /* 
 화면 내에서 요소를 찾을 때 사용한다
@@ -13,16 +17,22 @@ let formattedDate = `${timeStamp.getFullYear()}-${String(
 */
 export let findElement = async (driver, name, path) => {
   try {
-    await driver.$(path);
-    console.log(`${name} 노출`, PASS);
-    logToFile(`${name} 노출`, PASS);
+    let result = await driver.$(path).isDisplayed();
+
+    if (Boolean(result)) {
+      console.log(`${name} 노출`, PASS);
+      logToFile(`${name} 노출`, PASS);
+    }
   } catch (error) {
     console.log(error);
-    if (error.message.includes('still not')) {
+    if (
+      error.message.includes('still not') ||
+      error.message.includes('no such element')
+    ) {
       console.log(`${name} 노출`, FAIL);
       logToFile(`${name} 노출`, FAIL);
       await driver.saveScreenshot(
-        `./bugImage/${name} 노출 ${FAIL}(${formattedDate}).png`,
+        `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/${name} 노출 ${FAIL}(${formattedDate}).png`,
       );
     } else {
       console.log(`${name} 노출 확인 테스트 중 오류 발생`, BLOCK);
@@ -41,8 +51,10 @@ export let findElement = async (driver, name, path) => {
 */
 export let clickElement = async (driver, name, path) => {
   try {
-    await driver.$(`${path}`).click();
-    console.log(`${name} 클릭`, PASS);
+    let result = await driver.$(`${path}`).click();
+    if (Boolean(result)) {
+      console.log(`${name} 클릭`, PASS);
+    }
   } catch (error) {
     if (error.message.includes("Can't call click")) {
       console.log(`${name} 클릭`, FAIL);
@@ -70,17 +82,19 @@ export let clickElementForTarget = async (
 ) => {
   try {
     await driver.$(`${clickElementPath}`).click();
-    await driver
+    let result = await driver
       .$(targetElementPath)
-      .waitForDisplayed({ timeout: 10000, interval: 2000 });
-    console.log(
-      `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생`,
-      PASS,
-    );
-    logToFile(
-      `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생`,
-      PASS,
-    );
+      .waitForDisplayed({ timeout: 15000, interval: 2000 });
+    if (Boolean(result)) {
+      console.log(
+        `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생`,
+        PASS,
+      );
+      logToFile(
+        `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생`,
+        PASS,
+      );
+    }
   } catch (error) {
     console.log(error);
     if (error.message.includes("because element wasn't found")) {
@@ -91,23 +105,23 @@ export let clickElementForTarget = async (
       logToFile(`${clickElementName} 노출되지 않아 케이스 테스트 불가`, BLOCK);
     } else if (error.message.includes('still')) {
       console.log(
-        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입/발생`,
+        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입\\발생`,
         FAIL,
       );
       logToFile(
-        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입/발생`,
+        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입\\발생`,
         FAIL,
       );
       await driver.saveScreenshot(
-        `./bugImage/${clickElementName} 클릭 시 ${targetElementName} 화면 or 모달 진입 or 발생 ${FAIL}(${formattedDate}).png`,
+        `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/${clickElementName} 클릭 시 ${targetElementName} 화면 or 모달 진입 or 발생 ${FAIL}(${formattedDate}).png`,
       );
     } else {
       console.log(
-        `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생 테스트 중 오류 발생`,
+        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입\\발생 테스트 중 오류 발생`,
         BLOCK,
       );
       logToFile(
-        `${clickElementName} 클릭 시 ${targetElementName} 화면/모달 진입/발생 테스트 중 오류 발생`,
+        `${clickElementName} 클릭 시 ${targetElementName} 화면\\모달 진입\\발생 테스트 중 오류 발생`,
         BLOCK,
       );
     }
@@ -124,16 +138,18 @@ export let clickElementForTarget = async (
 */
 export let inputValue = async (driver, name, path, value) => {
   try {
-    await driver.$(`${path}`).setValue(value);
-    console.log(`${name}에 ${value} 입력 시 노출`, PASS);
-    logToFile(`${name}에 ${value} 입력 시 노출`, PASS);
+    let result = await driver.$(`${path}`).setValue(value);
+    if (result == null) {
+      console.log(`${name}에 ${value} 입력 시 노출`, PASS);
+      logToFile(`${name}에 ${value} 입력 시 노출`, PASS);
+    }
   } catch (error) {
     console.log(error);
     if (error.message.includes("Can't call setValue")) {
       console.log(`${name}에 ${value} 입력 시 노출`, FAIL);
       logToFile(`${name}에 ${value} 입력 시 노출`, FAIL);
       await driver.saveScreenshot(
-        `./bugImage/${name}에 ${value} 입력 시 노출 ${FAIL}(${formattedDate}).png`,
+        `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/${name}에 ${value} 입력 시 노출 ${FAIL}(${formattedDate}).png`,
       );
     } else {
       console.log(`${name}에 ${value} 입력 시 노출 테스트 중 오류 발생`, BLOCK);

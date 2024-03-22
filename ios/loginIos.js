@@ -182,7 +182,7 @@ export let logIn = async (driver) => {
             FAIL,
           );
           await driver.saveScreenshot(
-            `./bugImage/"로그인" 화면 내 [로그인] 버튼 클릭 시 "메인" 화면 진입 ${FAIL}(${formattedDate}).png`,
+            `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/"로그인" 화면 내 [로그인] 버튼 클릭 시 "메인" 화면 진입 ${FAIL}(${formattedDate}).png`,
           );
         } else {
           console.log(
@@ -194,7 +194,7 @@ export let logIn = async (driver) => {
             FAIL,
           );
           await driver.saveScreenshot(
-            `./bugImage/"로그인" 화면 내 [로그인] 버튼 클릭 시 "앱 접근 권한 안내" 화면 진입 ${FAIL}(${formattedDate}).png`,
+            `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/"로그인" 화면 내 [로그인] 버튼 클릭 시 "앱 접근 권한 안내" 화면 진입 ${FAIL}(${formattedDate}).png`,
           );
         }
       }

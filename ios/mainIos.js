@@ -4,6 +4,7 @@ import { logIn } from './loginIos.js';
 import { allowPermission } from './permission.js';
 import { logoutAtmain } from './logoutAtmain.js';
 import { myPage } from './myPage.js';
+import { appSettings } from './appSetting.js';
 
 async function main() {
   const caps = {
@@ -57,6 +58,7 @@ async function main() {
     }
   }
   await myPage(driver);
+  await appSettings(driver);
   await driver.deleteSession();
   logToFile('--------------------{END}--------------------', BLANK);
 }

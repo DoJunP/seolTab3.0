@@ -43,7 +43,7 @@ export let myPage = async (driver) => {
             FAIL),
           );
           await driver.saveScreenshot(
-            `./bugImage/"메인" 화면에서 [프로필] 버튼 클릭 시 "마이페이지" 화면 진입 ${FAIL}(${formattedDate}).png`,
+            `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/"메인" 화면에서 [프로필] 버튼 클릭 시 "마이페이지" 화면 진입 ${FAIL}(${formattedDate}).png`,
           );
         }
       }
@@ -143,7 +143,7 @@ let studentMypage = async (driver) => {
       console.log(`[개인정보 처리방침] 버튼 노출`, FAIL);
       logToFile(`[개인정보 처리방침] 버튼 노출`, FAIL);
       await driver.saveScreenshot(
-        `./bugImage/[개인정보 처리방침] 버튼 노출 ${FAIL}(${formattedDate}).png`,
+        `/Users/parkdojun/Documents/Seoltab3.0 Automation/bugImage/[개인정보 처리방침] 버튼 노출 ${FAIL}(${formattedDate}).png`,
       );
     } else {
       console.log(`[개인정보 처리방침] 노출 확인 테스트 중 오류 발생`, BLOCK);
@@ -224,6 +224,12 @@ let studentMypage = async (driver) => {
     action: 'tap',
     x: 42,
     y: 10,
+  });
+  // "마이페이지" 화면 [설정] 버튼 클릭 시 "앱 설정" 화면 진입
+  await driver.touchAction({
+    action: 'tap',
+    x: 769,
+    y: 51,
   });
 };
 
