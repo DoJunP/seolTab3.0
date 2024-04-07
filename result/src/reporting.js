@@ -195,7 +195,7 @@ function Tabtab(props) {
       className="mb-3"
     >
       <Tab eventKey="Pass Case" title="Pass Case" style={{ textAlign: 'left' }}>
-        {passLines.length == 0 && <p>자동화 결과를 불러와주세요</p>}
+        {passLines.length == 0 && <p>자동화 결과를 불러와 주세요</p>}
         {passLines.length != 0 &&
           passLines.map((a, i) => {
             return (
@@ -206,7 +206,7 @@ function Tabtab(props) {
           })}
       </Tab>
       <Tab eventKey="Fail Case" title="Fail Case" style={{ textAlign: 'left' }}>
-        {failLines.length == 0 && <p>자동화 결과를 불러와주세요</p>}
+        {failLines.length == 0 && <p>자동화 결과를 불러와 주세요</p>}
         {failLines.length != 0 &&
           failLines.map((a, i) => {
             return (
@@ -221,7 +221,7 @@ function Tabtab(props) {
         title="Block Case"
         style={{ textAlign: 'left' }}
       >
-        {blockLines.length == 0 && <p>자동화 결과를 불러와주세요</p>}
+        {blockLines.length == 0 && <p>자동화 결과를 불러와 주세요</p>}
         {blockLines.length != 0 &&
           blockLines.map((a, i) => {
             return (
