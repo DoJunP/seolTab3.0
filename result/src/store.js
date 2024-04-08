@@ -1,5 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { user } from './store/userSlice.js';
+import { data } from './store/dataSlice.js';
 
 let cart = createSlice({
   name: 'cart',
@@ -35,5 +36,6 @@ export default configureStore({
   reducer: {
     cart: cart.reducer,
     user: user.reducer,
+    data: data.reducer,
   },
 });
