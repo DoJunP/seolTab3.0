@@ -34,19 +34,19 @@ function TopNav() {
           </Nav.Link>
           <Nav.Link
             onClick={() => {
+              navigate('/detail/0');
+            }}
+            style={{ color: 'white' }}
+          >
+            Detail
+          </Nav.Link>
+          <Nav.Link
+            onClick={() => {
               navigate('/cart');
             }}
             style={{ color: 'white' }}
           >
             Cart
-          </Nav.Link>
-          <Nav.Link
-            onClick={() => {
-              navigate('/detail');
-            }}
-            style={{ color: 'white' }}
-          >
-            Detail
           </Nav.Link>
         </Nav>
       </Container>

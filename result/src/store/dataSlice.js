@@ -24,6 +24,12 @@ let data = createSlice({
       price: 130000,
     },
   ],
+  reducers: {
+    addData(state, action) {
+      state.push(action.payload);
+    },
+  },
 });
 
+export let { addData } = data.actions;
 export { data };

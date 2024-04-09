@@ -26,7 +26,7 @@ function Cart() {
       <Table>
         <thead>
           <tr>
-            <th>#</th>
+            <th>상품번호</th>
             <th>상품명</th>
             <th>수량</th>
             <th>변경하기</th>

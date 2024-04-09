@@ -18,7 +18,7 @@ let cart = createSlice({
     addItem(state, action) {
       let newItem = action.payload;
       let checkItem = state.find((a) => {
-        return a.name == newItem.name;
+        return a.id == newItem.id;
       });
       console.log(checkItem);
       if (checkItem) {
