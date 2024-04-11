@@ -25,6 +25,7 @@ let cart = createSlice({
         alert('이미 추가한 아이템입니다');
       } else {
         state.push(action.payload);
+        alert('상품이 장바구니에 추가되었습니다');
       }
     },
   },

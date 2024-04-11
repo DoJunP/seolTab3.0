@@ -1,10 +1,19 @@
 // 상단 네브바에 대한 components
 
+import axios from 'axios';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 function TopNav() {
   let navigate = useNavigate();
+
+  let result = useQuery('작명', () =>
+    axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
+      return a.data;
+    }),
+  );
+
   return (
     <Navbar
       style={{
@@ -29,7 +38,12 @@ function TopNav() {
           >
             Manual
           </Nav.Link>
-          <Nav.Link href="/home" style={{ color: 'white' }}>
+          <Nav.Link
+            onClick={() => {
+              navigate('/home');
+            }}
+            style={{ color: 'white' }}
+          >
             React Home
           </Nav.Link>
           <Nav.Link
@@ -47,6 +61,11 @@ function TopNav() {
             style={{ color: 'white' }}
           >
             Cart
+          </Nav.Link>
+          <Nav.Link>
+            {result.isLoading && '로딩중'}
+            {result.error && '에러'}
+            {result.data && result.data.name}
           </Nav.Link>
         </Nav>
       </Container>

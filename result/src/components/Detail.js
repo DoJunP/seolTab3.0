@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addItem } from '../store';
+import { useEffect } from 'react';
 
 function Detail() {
   let { id } = useParams();
@@ -33,6 +34,14 @@ function Detail() {
   let findArray = array.find((what) => {
     return what.id == 1;
   });
+  useEffect(() => {
+    let watchedItem = localStorage.getItem('watched');
+    watchedItem = JSON.parse(watchedItem);
+    watchedItem.push(findItem.id);
+    watchedItem = new Set(watchedItem);
+    watchedItem = Array.from(watchedItem);
+    localStorage.setItem('watched', JSON.stringify(watchedItem));
+  }, []);
 
   return (
     <div className="container">
